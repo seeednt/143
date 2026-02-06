@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Ansurhi, will you be my valentine 😋?</title>
+<title>Anushri, will you be my valentine 😋?</title>
 
 <style>
 html, body {
@@ -23,40 +23,105 @@ body {
 .card {
   background: #fff;
   width: 460px;
-  padding: 28px 22px 34px;
+  padding: 30px 24px 34px;
   border-radius: 26px;
   text-align: center;
   box-shadow: 0 24px 60px rgba(0,0,0,0.2);
-  position: relative;
 }
 
-/* 🎥 VIDEO LAYER */
-.video-wrap {
+/* 🧸 TEDDY */
+.teddy {
   position: relative;
-  width: 260px;
-  height: 260px;
-  margin: 0 auto;
+  width: 160px;
+  height: 180px;
+  margin: 0 auto 10px;
 }
 
-.video-wrap video {
+.head {
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle at top, #f6c995, #f1b97a);
+  border-radius: 50%;
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 18px;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  top: 0;
+  left: 10px;
 }
 
-.video-wrap video.active {
-  opacity: 1;
-  z-index: 2;
+.ear {
+  width: 40px;
+  height: 40px;
+  background: #f1b97a;
+  border-radius: 50%;
+  position: absolute;
+  top: -10px;
+}
+
+.ear.left { left: -10px; }
+.ear.right { right: -10px; }
+
+.eye {
+  width: 10px;
+  height: 10px;
+  background: #222;
+  border-radius: 50%;
+  position: absolute;
+  top: 52px;
+}
+
+.eye.left { left: 45px; }
+.eye.right { right: 45px; }
+
+.mouth {
+  position: absolute;
+  top: 78px;
+  left: 55px;
+  width: 30px;
+  height: 16px;
+  border-bottom: 4px solid #333;
+  border-radius: 0 0 40px 40px;
+}
+
+/* ARMS */
+.arm {
+  width: 36px;
+  height: 90px;
+  background: #f1b97a;
+  border-radius: 18px;
+  position: absolute;
+  top: 90px;
+  transform-origin: top center;
+  transition: transform 0.25s ease;
+}
+
+.arm.left { left: 10px; }
+.arm.right { right: 10px; }
+
+/* EXPRESSIONS */
+.confused .mouth {
+  width: 14px;
+  height: 14px;
+  background: #333;
+  border-radius: 50%;
+  border: none;
+}
+
+.facepalm .arm.left {
+  transform: rotate(-65deg);
+}
+
+.sassy .eye.left { transform: translateY(-2px); }
+.sassy .eye.right { transform: translateY(-2px); }
+
+.possessive .arm.left {
+  transform: rotate(-25deg);
+}
+.possessive .arm.right {
+  transform: rotate(25deg);
 }
 
 h1 {
   font-size: 22px;
-  margin: 18px 0 26px;
+  margin: 18px 0 24px;
 }
 
 .buttons {
@@ -72,17 +137,12 @@ button {
   padding: 14px 30px;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.15s ease;
 }
 
 #yes {
   background: #ff4b6e;
   color: white;
   font-weight: 600;
-}
-
-#yes:hover {
-  transform: scale(1.12);
 }
 
 #no {
@@ -102,14 +162,17 @@ button {
 
 <div class="card" id="card">
 
-  <!-- 🎥 TEDDY VIDEOS -->
-  <div class="video-wrap">
-    <video id="vidA" class="active" autoplay muted loop>
-      <source src="youre_already_mine.mp4" type="video/mp4">
-    </video>
-    <video id="vidB" muted>
-      <source src="youre_already_mine.mp4" type="video/mp4">
-    </video>
+  <!-- 🧸 TEDDY -->
+  <div class="teddy" id="teddy">
+    <div class="head">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="mouth"></div>
+    </div>
+    <div class="arm left"></div>
+    <div class="arm right"></div>
   </div>
 
   <h1>Anushri will you be my valentine?</h1>
@@ -126,81 +189,42 @@ button {
 </div>
 
 <script>
-const vidA = document.getElementById("vidA");
-const vidB = document.getElementById("vidB");
-let front = vidA;
-let back = vidB;
-
+const teddy = document.getElementById("teddy");
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const text = document.getElementById("reactionText");
 const card = document.getElementById("card");
 
 let noCount = 0;
-let touchedNo = false;
 
-/* 🔁 Smooth crossfade */
-function crossfade(src, loop=false) {
-  back.src = src;
-  back.loop = loop;
-  back.play();
+const reactions = [
+  { cls: "confused", text: "EXCUSEEE MEEE 🤨?!!" },
+  { cls: "facepalm", text: "YEA... TRY THAT AGAIN 😼" },
+  { cls: "possessive", text: "NICE TRY. YOU'RE ALREADY MINE 🧸💗", hideNo: true }
+];
 
-  back.classList.add("active");
-  front.classList.remove("active");
-
-  const temp = front;
-  front = back;
-  back = temp;
-}
-
-/* ⚡ FAST NO (cursor-chasing) */
+/* ⚡ FAST NO */
 noBtn.addEventListener("mouseenter", () => {
-  touchedNo = true;
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 80 - 40;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 });
 
-noBtn.addEventListener("mousemove", () => {
-  const x = Math.random() * 220 - 110;
-  const y = Math.random() * 100 - 50;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-});
-
-/* 🎭 NO reactions */
-const reactions = [
-  { src: "you_dare_deny_me.mp4", text: "EXCUSEEE MEEE 🤨?!!" },
-  { src: "do_you_wanna_reconsider.mp4", text: "YEA... TRY THAT AGAIN 😼" },
-  { src: "youre_already_mine.mp4", text: "NICE TRY. YOU'RE ALREADY MINE 🧸💗", hideNo: true, loop: true }
-];
-
+/* NO CLICK */
 noBtn.addEventListener("click", () => {
   if (noCount >= reactions.length) return;
   const r = reactions[noCount++];
-  crossfade(r.src, r.loop);
+  teddy.className = "teddy " + r.cls;
   text.textContent = r.text;
   if (r.hideNo) noBtn.style.display = "none";
 });
 
-/* ✅ YES LOGIC */
+/* YES */
 yesBtn.addEventListener("click", () => {
-  if (!touchedNo) {
-    card.innerHTML = `
-      <h1>YAY! 🎉</h1>
-      <img src="https://i.imgur.com/WrKPhfd.gif"
-           style="width:300px;border-radius:16px;margin-top:12px;">
-      <p style="margin-top:12px;">first try. as expected 💗</p>
-    `;
-  } else {
-    card.innerHTML = `
-      <h1>Correct choice 😌</h1>
-      <video autoplay loop muted
-             style="width:260px;border-radius:18px;margin-top:12px;">
-        <source src="youre_already_mine.mp4" type="video/mp4">
-      </video>
-      <p style="margin-top:12px;">took you a second, but we got there babe :p</p>
-    `;
-  }
+  card.innerHTML = `
+    <h1>Correct choice 😌</h1>
+    <p style="margin-top:12px;">obviously.</p>
+  `;
 });
 </script>
 
