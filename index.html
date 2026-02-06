@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
 <title>Anushri, will you be my valentine 🐧?</title>
 
 <style>
@@ -12,9 +12,10 @@
 }
 
 html, body {
+  margin: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
+  overflow: hidden;
 }
 
 body {
@@ -27,74 +28,97 @@ body {
 .card {
   background: #fff;
   width: 92%;
-  max-width: 460px;
-  padding: 40px 28px;
-  border-radius: 22px;
+  max-width: 480px;
+  padding: 44px 28px;
+  border-radius: 26px;
   text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
 }
 
-/* TEDDY */
+/* 🧸 PRETTY TEDDY */
 .teddy {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 12px;
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 14px;
   position: relative;
 }
 
 .face {
-  width: 96px;
-  height: 96px;
-  background: #f1b97a;
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(circle at top, #f6c995, #f1b97a);
   border-radius: 50%;
   position: relative;
 }
 
 .ear {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background: #f1b97a;
   border-radius: 50%;
   position: absolute;
-  top: -8px;
+  top: -10px;
 }
 
-.ear.left { left: -8px; }
-.ear.right { right: -8px; }
+.ear::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #f7d3b0;
+  border-radius: 50%;
+  position: absolute;
+  top: 9px;
+  left: 9px;
+}
+
+.ear.left { left: -10px; }
+.ear.right { right: -10px; }
 
 .eye {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   background: #222;
   border-radius: 50%;
   position: absolute;
-  top: 36px;
+  top: 42px;
 }
 
-.eye.left { left: 30px; }
-.eye.right { right: 30px; }
+.eye.left { left: 36px; }
+.eye.right { right: 36px; }
 
-.nose {
+.cheek {
   width: 10px;
   height: 10px;
+  background: #f2a1a1;
+  border-radius: 50%;
+  position: absolute;
+  top: 56px;
+}
+
+.cheek.left { left: 26px; }
+.cheek.right { right: 26px; }
+
+.nose {
+  width: 12px;
+  height: 12px;
   background: #d48a6a;
   border-radius: 50%;
   position: absolute;
-  top: 48px;
+  top: 58px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.heart {
+.bow {
   position: absolute;
-  top: -6px;
-  right: -6px;
-  font-size: 24px;
+  top: -8px;
+  right: 20px;
+  font-size: 20px;
 }
 
 h1 {
   font-size: 22px;
-  margin: 22px 0 30px;
+  margin: 22px 0 28px;
   color: #111;
 }
 
@@ -102,7 +126,6 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 18px;
-  position: relative;
 }
 
 button {
@@ -116,7 +139,7 @@ button {
 
 #yes {
   background: #ff4b6e;
-  color: #fff;
+  color: white;
   font-weight: 600;
 }
 
@@ -132,7 +155,7 @@ button {
 
 .hint {
   margin-top: 18px;
-  font-size: 12px;
+  font-size: 13px;
   color: #666;
 }
 
@@ -143,13 +166,13 @@ button {
 
 .yay h2 {
   font-size: 24px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .yay img {
   width: 100%;
   max-width: 320px;
-  border-radius: 14px;
+  border-radius: 16px;
 }
 
 @keyframes pop {
@@ -169,24 +192,26 @@ button {
       <div class="ear right"></div>
       <div class="eye left"></div>
       <div class="eye right"></div>
+      <div class="cheek left"></div>
+      <div class="cheek right"></div>
       <div class="nose"></div>
-      <div class="ribbon">🎀</div>
+      <div class="bow">🎀</div>
     </div>
   </div>
 
-  <h1>Anushri will you be my valentine?</h1>
+  <h1>Anushri, will you be my valentine 🐧?</h1>
 
   <div class="buttons">
     <button id="yes">Yes</button>
     <button id="no">No</button>
   </div>
 
-  <div class="hint">You can't say "No" to me bebe 🙈</div>
+  <div class="hint">You can’t say “No” to me bebe 🙈</div>
 
   <div class="yay" id="yay">
-    <h2>YAY! 🎉</h2>
-    <!-- ✅ REAL ANIMATED GIF -->
-    <img src="https://i.gifer.com/0c4b.gif" alt="celebration gif">
+    <h2>YAYAHYAHYAHYHH!! ✨️🎉</h2>
+    <!-- ✅ WORKING TENOR GIF -->
+    <img src="https://tenor.com/bnHxa.gif" alt="mind blown gif">
   </div>
 
 </div>
@@ -197,7 +222,6 @@ const noBtn = document.getElementById("no");
 const card = document.getElementById("card");
 const yay = document.getElementById("yay");
 
-// NO button escape (mobile + desktop)
 function escapeNo() {
   const x = Math.random() * 260 - 130;
   const y = Math.random() * 180 - 90;
@@ -207,9 +231,7 @@ function escapeNo() {
 noBtn.addEventListener("touchstart", escapeNo);
 noBtn.addEventListener("mouseenter", escapeNo);
 noBtn.addEventListener("mousemove", escapeNo);
-noBtn.addEventListener("click", escapeNo);
 
-// YES click
 yesBtn.addEventListener("click", () => {
   card.innerHTML = "";
   card.appendChild(yay);
