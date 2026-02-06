@@ -27,7 +27,7 @@ st.markdown(
     }
 
     iframe {
-        width: 100vw protect;
+        width: 100vw !important;
         height: 100vh !important;
         border: none !important;
         overflow: hidden !important;
