@@ -1,16 +1,16 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Anushri, will you be my valentine?",
+    page_title="Anushri, will you be my valentine 💖?",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
 
-# 🔥 NUKE STREAMLIT STYLING
+# 🔥 Remove ALL Streamlit padding, margins, dark background
 st.markdown(
     """
     <style>
-    html, body, [class*="css"]  {
+    html, body, [class*="css"] {
         background-color: #f6c1cb !important;
     }
 
@@ -18,6 +18,11 @@ st.markdown(
         padding: 0 !important;
         margin: 0 !important;
         max-width: 100% !important;
+    }
+
+    header, footer, #MainMenu {
+        visibility: hidden;
+        height: 0px;
     }
 
     iframe {
@@ -33,4 +38,4 @@ st.markdown(
 with open("index.html", "r", encoding="utf-8") as f:
     html = f.read()
 
-st.components.v1.html(html, height=1000, scrolling=False)
+st.components.v1.html(html, height=1200, scrolling=False)
