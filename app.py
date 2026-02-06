@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Anushri 💖",
+    page_title="Anushri 💗",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
