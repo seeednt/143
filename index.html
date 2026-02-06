@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Valentine</title>
 
@@ -11,6 +11,7 @@ html, body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 body {
@@ -18,17 +19,39 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .card {
   background: #fff;
   width: 92%;
-  max-width: 480px;
-  padding: 36px 24px 40px;
+  max-width: 460px;
+  padding: 28px 22px 34px;
   border-radius: 26px;
   text-align: center;
   box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* 🎥 VIDEO CROSSFADER */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.video-wrap video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border-radius: 18px;
+  opacity: 0;
+  transition: opacity 0.45s ease-in-out;
+}
+
+.video-wrap video.active {
+  opacity: 1;
+  position: relative;
 }
 
 h1 {
@@ -40,6 +63,7 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 18px;
+  position: relative;
 }
 
 button {
@@ -48,12 +72,12 @@ button {
   padding: 14px 30px;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease;
 }
 
 #yes {
   background: #ff4b6e;
-  color: #fff;
+  color: white;
   font-weight: 600;
 }
 
@@ -63,22 +87,12 @@ button {
 
 #no {
   background: #eee;
+  position: relative;
 }
 
-.reaction {
-  margin-top: 18px;
+.text {
+  margin-top: 16px;
   font-size: 15px;
-}
-
-.yay {
-  display: none;
-}
-
-.yay img {
-  width: 100%;
-  max-width: 300px;
-  border-radius: 16px;
-  margin-top: 12px;
 }
 </style>
 </head>
@@ -87,90 +101,102 @@ button {
 
 <div class="card" id="card">
 
-<!-- 🧸 SVG TEDDY -->
-<svg id="teddy" width="160" height="160" viewBox="0 0 200 200">
-  <!-- Arms -->
-  <g id="leftArm" transform-origin="110px 110px">
-    <rect x="40" y="90" rx="14" ry="14" width="40" height="80" fill="#f1b97a"/>
-  </g>
+  <!-- 🎥 Crossfade videos -->
+  <div class="video-wrap">
+    <video id="v1" class="active" autoplay muted playsinline>
+      <source src="youre_already_mine.mp4" type="video/mp4">
+    </video>
+    <video id="v2" muted playsinline>
+      <source src="" type="video/mp4">
+    </video>
+  </div>
 
-  <g id="rightArm" transform-origin="90px 110px">
-    <rect x="120" y="90" rx="14" ry="14" width="40" height="80" fill="#f1b97a"/>
-  </g>
+  <h1>Anushri will you be my valentine?</h1>
 
-  <!-- Head -->
-  <circle cx="100" cy="80" r="55" fill="#f1b97a"/>
-  <circle cx="65" cy="35" r="18" fill="#f1b97a"/>
-  <circle cx="135" cy="35" r="18" fill="#f1b97a"/>
+  <div class="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
 
-  <!-- Face -->
-  <circle id="eyeL" cx="82" cy="75" r="5"/>
-  <circle id="eyeR" cx="118" cy="75" r="5"/>
-  <ellipse id="mouth" cx="100" cy="95" rx="10" ry="6" fill="#333"/>
-</svg>
-
-<h1>Anushri will you be my valentine?</h1>
-
-<div class="buttons">
-  <button id="yes">Yes</button>
-  <button id="no">No</button>
-</div>
-
-<div class="reaction" id="reaction"></div>
-
-<div class="yay" id="yay">
-  <h2>YAY! 🎉</h2>
-  <img src="https://i.imgur.com/WrKPhfd.gif" alt="mind blown">
-</div>
+  <div class="text" id="reactionText">
+    choose wisely 😌
+  </div>
 
 </div>
 
 <script>
-const leftArm = document.getElementById("leftArm");
-const rightArm = document.getElementById("rightArm");
-const mouth = document.getElementById("mouth");
-const reaction = document.getElementById("reaction");
+const v1 = document.getElementById("v1");
+const v2 = document.getElementById("v2");
+let front = v1, back = v2;
+
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
-const yay = document.getElementById("yay");
+const text = document.getElementById("reactionText");
 const card = document.getElementById("card");
 
-let step = 0;
+let noCount = 0;
+let touchedNo = false;
 
-const states = [
-  () => {
-    leftArm.style.transform = "rotate(-20deg)";
-    rightArm.style.transform = "rotate(20deg)";
-    mouth.setAttribute("rx", "4");
-    reaction.textContent = "😕 huh? try again.";
-  },
-  () => {
-    leftArm.style.transform = "rotate(-70deg)";
-    reaction.textContent = "🤦 nope. incorrect choice.";
-  },
-  () => {
-    leftArm.style.transform = "rotate(0deg)";
-    rightArm.style.transform = "rotate(0deg)";
-    reaction.textContent = "💔 nah. not allowed.";
-  },
-  () => {
-    leftArm.style.transform = "rotate(-40deg)";
-    rightArm.style.transform = "rotate(40deg)";
-    reaction.textContent = "🪧 okay but why tho 😭 (still no)";
-    noBtn.style.display = "none";
-  }
+/* 🔁 Smooth crossfade swap */
+function swapVideo(src) {
+  back.src = src;
+  back.load();
+  back.play();
+
+  back.classList.add("active");
+  front.classList.remove("active");
+
+  const temp = front;
+  front = back;
+  back = temp;
+}
+
+/* 😈 FAST NO (desktop + mobile) */
+function dodgeNo() {
+  touchedNo = true;
+  const x = Math.random() * 240 - 120;
+  const y = Math.random() * 120 - 60;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+noBtn.addEventListener("mouseenter", dodgeNo);
+noBtn.addEventListener("mousemove", dodgeNo);
+noBtn.addEventListener("touchstart", dodgeNo);
+
+/* 🎭 Reactions on No */
+const reactions = [
+  { src: "you_dare_deny_me.mp4", text: "excuse me??? 😐" },
+  { src: "do_you_wanna_reconsider.mp4", text: "yeah… try that again 😏" },
+  { src: "youre_already_mine.mp4", text: "nice try. you’re mine 🧸💗", hideNo: true }
 ];
 
 noBtn.addEventListener("click", () => {
-  if (step < states.length) {
-    states[step++]();
-  }
+  if (noCount >= reactions.length) return;
+  const r = reactions[noCount++];
+  swapVideo(r.src);
+  text.textContent = r.text;
+  if (r.hideNo) noBtn.style.display = "none";
 });
 
+/* ✅ YES logic — GIF ONLY if YES FIRST */
 yesBtn.addEventListener("click", () => {
-  card.innerHTML = "";
-  card.appendChild(yay);
-  yay.style.display = "block";
+  if (!touchedNo) {
+    card.innerHTML = `
+      <h1>YAY! 🎉</h1>
+      <img src="https://i.imgur.com/WrKPhfd.gif"
+           style="width:100%;max-width:300px;border-radius:16px;margin-top:12px;">
+      <p style="margin-top:12px;">first try. as expected 💗</p>
+    `;
+  } else {
+    card.innerHTML = `
+      <h1>Correct choice 😌</h1>
+      <video autoplay loop muted playsinline
+             style="width:100%;max-width:260px;border-radius:18px;margin-top:12px;">
+        <source src="youre_already_mine.mp4" type="video/mp4">
+      </video>
+      <p style="margin-top:12px;">took you a second, but we got there 🧸</p>
+    `;
+  }
 });
 </script>
 
