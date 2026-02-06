@@ -11,9 +11,13 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
       margin: 0;
-      height: 100vh;
+    }
+
+    body {
       background: #f6c1cb;
       display: flex;
       align-items: center;
@@ -21,62 +25,63 @@
     }
 
     .card {
-      background: #fff;
-      width: 420px;
+      background: #ffffff;
+      width: 520px;               /* INCREASED */
       max-width: 92%;
-      padding: 36px 28px 32px;
-      border-radius: 18px;
+      padding: 48px 40px 44px;    /* INCREASED */
+      border-radius: 22px;
       text-align: center;
-      box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+      box-shadow: 0 22px 50px rgba(0,0,0,0.18);
       position: relative;
     }
 
+    /* TEDDY */
     .teddy {
-      width: 90px;
-      height: 90px;
-      margin: 0 auto 10px;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 16px;
       position: relative;
     }
 
-    .teddy-face {
-      width: 90px;
-      height: 90px;
+    .face {
+      width: 100px;
+      height: 100px;
       background: #f1b97a;
       border-radius: 50%;
       position: relative;
     }
 
     .ear {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       background: #f1b97a;
       border-radius: 50%;
       position: absolute;
-      top: -8px;
+      top: -10px;
     }
 
-    .ear.left { left: -8px; }
-    .ear.right { right: -8px; }
+    .ear.left { left: -10px; }
+    .ear.right { right: -10px; }
 
     .eye {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       background: #222;
       border-radius: 50%;
       position: absolute;
-      top: 34px;
+      top: 38px;
     }
 
-    .eye.left { left: 28px; }
-    .eye.right { right: 28px; }
+    .eye.left { left: 32px; }
+    .eye.right { right: 32px; }
 
     .nose {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       background: #d48a6a;
       border-radius: 50%;
       position: absolute;
-      top: 44px;
+      top: 50px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -85,36 +90,40 @@
       position: absolute;
       top: -6px;
       right: -6px;
-      font-size: 24px;
+      font-size: 26px;
     }
 
     h1 {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 600;
+      margin: 24px 0 34px;
       color: #111;
-      margin: 22px 0 28px;
     }
 
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 18px;
+      gap: 22px;
       position: relative;
     }
 
     button {
       border: none;
       border-radius: 999px;
-      padding: 14px 28px;
-      font-size: 16px;
+      padding: 16px 34px;
+      font-size: 17px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: transform 0.15s ease;
     }
 
     #yes {
       background: #ff4b6e;
       color: white;
       font-weight: 600;
+    }
+
+    #yes:hover {
+      transform: scale(1.12);   /* YES HOVER EFFECT */
     }
 
     #no {
@@ -124,8 +133,8 @@
     }
 
     .hint {
-      margin-top: 18px;
-      font-size: 12px;
+      margin-top: 22px;
+      font-size: 13px;
       color: #666;
     }
 
@@ -136,13 +145,14 @@
 
     .yay h2 {
       margin-top: 10px;
-      font-size: 24px;
+      font-size: 26px;
     }
 
     .yay img {
       width: 100%;
-      border-radius: 12px;
-      margin-top: 16px;
+      max-width: 360px;
+      border-radius: 14px;
+      margin-top: 18px;
     }
 
     @keyframes pop {
@@ -156,7 +166,7 @@
   <div class="card" id="card">
 
     <div class="teddy">
-      <div class="teddy-face">
+      <div class="face">
         <div class="ear left"></div>
         <div class="ear right"></div>
         <div class="eye left"></div>
@@ -177,10 +187,7 @@
 
     <div class="yay" id="yay">
       <h2>YAY! 🎉</h2>
-      <img
-        src="https://images.unsplash.com/photo-1517841905240-472988babdf9"
-        alt="celebration"
-      />
+      <img src="https://i.gifer.com/fetch/w300-preview/0c/0c4be1949325bee54ad17b7685493df4.gif" alt="celebration gif">
     </div>
 
   </div>
@@ -193,16 +200,15 @@
 
     let scale = 1;
 
-    noBtn.addEventListener("mouseenter", () => {
-      const x = Math.random() * 160 - 80;
-      const y = Math.random() * 100 - 50;
+    function moveNo() {
+      const x = Math.random() * 300 - 150;  // FASTER + FARTHER
+      const y = Math.random() * 220 - 110;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    });
+    }
 
-    noBtn.addEventListener("click", () => {
-      scale += 0.2;
-      yesBtn.style.transform = `scale(${scale})`;
-    });
+    noBtn.addEventListener("mouseenter", moveNo);
+    noBtn.addEventListener("mousemove", moveNo);
+    noBtn.addEventListener("click", moveNo);
 
     yesBtn.addEventListener("click", () => {
       card.innerHTML = "";
