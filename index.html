@@ -23,105 +23,105 @@ body {
 .card {
   background: #fff;
   width: 460px;
-  padding: 30px 24px 34px;
+  padding: 32px 24px 36px;
   border-radius: 26px;
   text-align: center;
   box-shadow: 0 24px 60px rgba(0,0,0,0.2);
 }
 
-/* 🧸 TEDDY */
+/* 🧸 ORIGINAL CUTE TEDDY */
 .teddy {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 14px;
   position: relative;
-  width: 160px;
-  height: 180px;
-  margin: 0 auto 10px;
 }
 
-.head {
-  width: 140px;
-  height: 140px;
+.face {
+  width: 110px;
+  height: 110px;
   background: radial-gradient(circle at top, #f6c995, #f1b97a);
   border-radius: 50%;
-  position: absolute;
-  top: 0;
-  left: 10px;
+  position: relative;
 }
 
 .ear {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   background: #f1b97a;
   border-radius: 50%;
   position: absolute;
   top: -10px;
 }
 
+.ear::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: #f7d3b0;
+  border-radius: 50%;
+  position: absolute;
+  top: 9px;
+  left: 9px;
+}
+
 .ear.left { left: -10px; }
 .ear.right { right: -10px; }
 
 .eye {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   background: #222;
   border-radius: 50%;
   position: absolute;
-  top: 52px;
+  top: 42px;
 }
 
-.eye.left { left: 45px; }
-.eye.right { right: 45px; }
+.eye.left { left: 36px; }
+.eye.right { right: 36px; }
 
-.mouth {
+.cheek {
+  width: 10px;
+  height: 10px;
+  background: #f2a1a1;
+  border-radius: 50%;
   position: absolute;
-  top: 78px;
-  left: 55px;
-  width: 30px;
-  height: 16px;
-  border-bottom: 4px solid #333;
-  border-radius: 0 0 40px 40px;
+  top: 56px;
 }
 
-/* ARMS */
-.arm {
-  width: 36px;
-  height: 90px;
-  background: #f1b97a;
-  border-radius: 18px;
+.cheek.left { left: 26px; }
+.cheek.right { right: 26px; }
+
+.nose {
+  width: 12px;
+  height: 12px;
+  background: #d48a6a;
+  border-radius: 50%;
   position: absolute;
-  top: 90px;
-  transform-origin: top center;
-  transition: transform 0.25s ease;
+  top: 58px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.arm.left { left: 10px; }
-.arm.right { right: 10px; }
+.bow {
+  position: absolute;
+  top: -8px;
+  right: 20px;
+  font-size: 20px;
+}
 
 /* EXPRESSIONS */
-.confused .mouth {
-  width: 14px;
-  height: 14px;
-  background: #333;
-  border-radius: 50%;
-  border: none;
+.confused .eye {
+  transform: translateX(-2px);
 }
 
-.facepalm .arm.left {
-  transform: rotate(-65deg);
-}
-
-.sassy .eye.left { transform: translateY(-2px); }
-.sassy .eye.right { transform: translateY(-2px); }
-
-.possessive .arm.left {
-  transform: rotate(-25deg);
-}
-.possessive .arm.right {
-  transform: rotate(25deg);
+.devilish .eye {
+  transform: translateY(-1px);
 }
 
 h1 {
   font-size: 22px;
-  margin: 18px 0 24px;
+  margin: 18px 0 26px;
 }
 
 .buttons {
@@ -143,6 +143,11 @@ button {
   background: #ff4b6e;
   color: white;
   font-weight: 600;
+  transition: transform 0.15s ease;
+}
+
+#yes:hover {
+  transform: scale(1.12);
 }
 
 #no {
@@ -164,15 +169,16 @@ button {
 
   <!-- 🧸 TEDDY -->
   <div class="teddy" id="teddy">
-    <div class="head">
+    <div class="face">
       <div class="ear left"></div>
       <div class="ear right"></div>
       <div class="eye left"></div>
       <div class="eye right"></div>
-      <div class="mouth"></div>
+      <div class="cheek left"></div>
+      <div class="cheek right"></div>
+      <div class="nose"></div>
+      <div class="bow">🎀</div>
     </div>
-    <div class="arm left"></div>
-    <div class="arm right"></div>
   </div>
 
   <h1>Anushri will you be my valentine?</h1>
@@ -198,12 +204,22 @@ const card = document.getElementById("card");
 let noCount = 0;
 
 const reactions = [
-  { cls: "confused", text: "EXCUSEEE MEEE 🤨?!!" },
-  { cls: "facepalm", text: "YEA... TRY THAT AGAIN 😼" },
-  { cls: "possessive", text: "NICE TRY. YOU'RE ALREADY MINE 🧸💗", hideNo: true }
+  {
+    cls: "confused",
+    text: "EXCUSEEE MEEE 🤨😶‍🌫️?!"
+  },
+  {
+    cls: "devilish",
+    text: "HAHA… TRY THAT AGAIN 😈🔥"
+  },
+  {
+    cls: "devilish",
+    text: "HAHA, YOU CAN’T SAY NO 😌😈💗",
+    hideNo: true
+  }
 ];
 
-/* ⚡ FAST NO */
+/* ⚡ FAST NO MOVEMENT */
 noBtn.addEventListener("mouseenter", () => {
   const x = Math.random() * 200 - 100;
   const y = Math.random() * 80 - 40;
@@ -219,11 +235,11 @@ noBtn.addEventListener("click", () => {
   if (r.hideNo) noBtn.style.display = "none";
 });
 
-/* YES */
+/* YES CLICK */
 yesBtn.addEventListener("click", () => {
   card.innerHTML = `
     <h1>Correct choice 😌</h1>
-    <p style="margin-top:12px;">obviously.</p>
+    <p style="margin-top:12px;">as expected.</p>
   `;
 });
 </script>
