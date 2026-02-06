@@ -1,221 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Be My Valentine</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Be My Valentine</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
 
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0;
-    }
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
 
-    body {
-      background: #f6c1cb;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+body {
+  background: #f6c1cb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-    .card {
-      background: #ffffff;
-      width: 520px;               /* INCREASED */
-      max-width: 92%;
-      padding: 48px 40px 44px;    /* INCREASED */
-      border-radius: 22px;
-      text-align: center;
-      box-shadow: 0 22px 50px rgba(0,0,0,0.18);
-      position: relative;
-    }
+.card {
+  background: #fff;
+  width: 92%;
+  max-width: 460px;
+  padding: 40px 28px;
+  border-radius: 22px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
 
-    /* TEDDY */
-    .teddy {
-      width: 100px;
-      height: 100px;
-      margin: 0 auto 16px;
-      position: relative;
-    }
+/* TEDDY */
+.teddy {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 12px;
+  position: relative;
+}
 
-    .face {
-      width: 100px;
-      height: 100px;
-      background: #f1b97a;
-      border-radius: 50%;
-      position: relative;
-    }
+.face {
+  width: 96px;
+  height: 96px;
+  background: #f1b97a;
+  border-radius: 50%;
+  position: relative;
+}
 
-    .ear {
-      width: 34px;
-      height: 34px;
-      background: #f1b97a;
-      border-radius: 50%;
-      position: absolute;
-      top: -10px;
-    }
+.ear {
+  width: 32px;
+  height: 32px;
+  background: #f1b97a;
+  border-radius: 50%;
+  position: absolute;
+  top: -8px;
+}
 
-    .ear.left { left: -10px; }
-    .ear.right { right: -10px; }
+.ear.left { left: -8px; }
+.ear.right { right: -8px; }
 
-    .eye {
-      width: 9px;
-      height: 9px;
-      background: #222;
-      border-radius: 50%;
-      position: absolute;
-      top: 38px;
-    }
+.eye {
+  width: 8px;
+  height: 8px;
+  background: #222;
+  border-radius: 50%;
+  position: absolute;
+  top: 36px;
+}
 
-    .eye.left { left: 32px; }
-    .eye.right { right: 32px; }
+.eye.left { left: 30px; }
+.eye.right { right: 30px; }
 
-    .nose {
-      width: 12px;
-      height: 12px;
-      background: #d48a6a;
-      border-radius: 50%;
-      position: absolute;
-      top: 50px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
+.nose {
+  width: 10px;
+  height: 10px;
+  background: #d48a6a;
+  border-radius: 50%;
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    .heart {
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      font-size: 26px;
-    }
+.heart {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  font-size: 24px;
+}
 
-    h1 {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 24px 0 34px;
-      color: #111;
-    }
+h1 {
+  font-size: 22px;
+  margin: 22px 0 30px;
+  color: #111;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 22px;
-      position: relative;
-    }
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  position: relative;
+}
 
-    button {
-      border: none;
-      border-radius: 999px;
-      padding: 16px 34px;
-      font-size: 17px;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-    }
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
 
-    #yes {
-      background: #ff4b6e;
-      color: white;
-      font-weight: 600;
-    }
+#yes {
+  background: #ff4b6e;
+  color: #fff;
+  font-weight: 600;
+}
 
-    #yes:hover {
-      transform: scale(1.12);   /* YES HOVER EFFECT */
-    }
+#yes:active {
+  transform: scale(1.12);
+}
 
-    #no {
-      background: #ededed;
-      color: #333;
-      position: relative;
-    }
+#no {
+  background: #ededed;
+  color: #333;
+  position: relative;
+}
 
-    .hint {
-      margin-top: 22px;
-      font-size: 13px;
-      color: #666;
-    }
+.hint {
+  margin-top: 18px;
+  font-size: 12px;
+  color: #666;
+}
 
-    .yay {
-      display: none;
-      animation: pop 0.4s ease;
-    }
+.yay {
+  display: none;
+  animation: pop 0.4s ease;
+}
 
-    .yay h2 {
-      margin-top: 10px;
-      font-size: 26px;
-    }
+.yay h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
 
-    .yay img {
-      width: 100%;
-      max-width: 360px;
-      border-radius: 14px;
-      margin-top: 18px;
-    }
+.yay img {
+  width: 100%;
+  max-width: 320px;
+  border-radius: 14px;
+}
 
-    @keyframes pop {
-      from { opacity: 0; transform: scale(0.85); }
-      to { opacity: 1; transform: scale(1); }
-    }
-  </style>
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
 </head>
+
 <body>
 
-  <div class="card" id="card">
+<div class="card" id="card">
 
-    <div class="teddy">
-      <div class="face">
-        <div class="ear left"></div>
-        <div class="ear right"></div>
-        <div class="eye left"></div>
-        <div class="eye right"></div>
-        <div class="nose"></div>
-        <div class="heart">❤️</div>
-      </div>
+  <div class="teddy">
+    <div class="face">
+      <div class="ear left"></div>
+      <div class="ear right"></div>
+      <div class="eye left"></div>
+      <div class="eye right"></div>
+      <div class="nose"></div>
+      <div class="heart">❤️</div>
     </div>
-
-    <h1>Anushri will you be my valentine?</h1>
-
-    <div class="buttons">
-      <button id="yes">Yes</button>
-      <button id="no">No</button>
-    </div>
-
-    <div class="hint">“No” seems a bit shy 😳</div>
-
-    <div class="yay" id="yay">
-      <h2>YAY! 🎉</h2>
-      <img src="https://i.gifer.com/fetch/w300-preview/0c/0c4be1949325bee54ad17b7685493df4.gif" alt="celebration gif">
-    </div>
-
   </div>
 
-  <script>
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    const card = document.getElementById("card");
-    const yay = document.getElementById("yay");
+  <h1>Anushri will you be my valentine?</h1>
 
-    let scale = 1;
+  <div class="buttons">
+    <button id="yes">Yes</button>
+    <button id="no">No</button>
+  </div>
 
-    function moveNo() {
-      const x = Math.random() * 300 - 150;  // FASTER + FARTHER
-      const y = Math.random() * 220 - 110;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
+  <div class="hint">You can't say "No" to me bebe 🙈</div>
 
-    noBtn.addEventListener("mouseenter", moveNo);
-    noBtn.addEventListener("mousemove", moveNo);
-    noBtn.addEventListener("click", moveNo);
+  <div class="yay" id="yay">
+    <h2>YAY! 🎉</h2>
+    <!-- ✅ REAL ANIMATED GIF -->
+    <img src="https://i.gifer.com/0c4b.gif" alt="celebration gif">
+  </div>
 
-    yesBtn.addEventListener("click", () => {
-      card.innerHTML = "";
-      card.appendChild(yay);
-      yay.style.display = "block";
-    });
-  </script>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const card = document.getElementById("card");
+const yay = document.getElementById("yay");
+
+// NO button escape (mobile + desktop)
+function escapeNo() {
+  const x = Math.random() * 260 - 130;
+  const y = Math.random() * 180 - 90;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+noBtn.addEventListener("touchstart", escapeNo);
+noBtn.addEventListener("mouseenter", escapeNo);
+noBtn.addEventListener("mousemove", escapeNo);
+noBtn.addEventListener("click", escapeNo);
+
+// YES click
+yesBtn.addEventListener("click", () => {
+  card.innerHTML = "";
+  card.appendChild(yay);
+  yay.style.display = "block";
+});
+</script>
 
 </body>
 </html>
