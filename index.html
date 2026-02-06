@@ -2,15 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-<title>Be My Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Valentine</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
 html, body {
   margin: 0;
   width: 100%;
@@ -23,131 +18,22 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .card {
   background: #fff;
   width: 92%;
   max-width: 480px;
-  padding: 44px 28px;
+  padding: 36px 24px 40px;
   border-radius: 26px;
   text-align: center;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
-}
-
-/* 🧸 TEDDY */
-.teddy {
-  width: 110px;
-  height: 110px;
-  margin: 0 auto 14px;
-  position: relative;
-}
-
-.face {
-  width: 110px;
-  height: 110px;
-  background: radial-gradient(circle at top, #f6c995, #f1b97a);
-  border-radius: 50%;
-  position: relative;
-}
-
-.ear {
-  width: 36px;
-  height: 36px;
-  background: #f1b97a;
-  border-radius: 50%;
-  position: absolute;
-  top: -10px;
-}
-
-.ear::after {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background: #f7d3b0;
-  border-radius: 50%;
-  position: absolute;
-  top: 9px;
-  left: 9px;
-}
-
-.ear.left { left: -10px; }
-.ear.right { right: -10px; }
-
-.eye {
-  width: 9px;
-  height: 9px;
-  background: #222;
-  border-radius: 50%;
-  position: absolute;
-  top: 42px;
-}
-
-.eye.left { left: 36px; }
-.eye.right { right: 36px; }
-
-.cheek {
-  width: 10px;
-  height: 10px;
-  background: #f2a1a1;
-  border-radius: 50%;
-  position: absolute;
-  top: 56px;
-}
-
-.cheek.left { left: 26px; }
-.cheek.right { right: 26px; }
-
-.nose {
-  width: 12px;
-  height: 12px;
-  background: #d48a6a;
-  border-radius: 50%;
-  position: absolute;
-  top: 58px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.face.confused .eye {
-  transform: translateX(-2px);
-}
-
-.face.facepalm::after {
-  content: "🤦";
-  position: absolute;
-  font-size: 26px;
-  top: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.face.broken::after {
-  content: "💔";
-  position: absolute;
-  font-size: 24px;
-  top: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.face.sign::after {
-  content: "🪧 Okay but why tho 😭";
-  position: absolute;
-  font-size: 14px;
-  background: #f3f3f3;
-  padding: 6px 10px;
-  border-radius: 10px;
-  top: -44px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
 }
 
 h1 {
   font-size: 22px;
-  margin: 22px 0 28px;
-  color: #111;
+  margin: 18px 0 26px;
 }
 
 .buttons {
@@ -162,54 +48,37 @@ button {
   padding: 14px 30px;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.15s ease;
+  transition: transform 0.2s ease;
 }
 
 #yes {
   background: #ff4b6e;
-  color: white;
+  color: #fff;
   font-weight: 600;
 }
 
-#yes:active {
+#yes:hover, #yes:active {
   transform: scale(1.12);
 }
 
 #no {
-  background: #ededed;
-  color: #333;
+  background: #eee;
 }
 
-.hint {
+.reaction {
   margin-top: 18px;
-  font-size: 13px;
-  color: #666;
-}
-
-.no-reaction {
-  margin-top: 16px;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .yay {
   display: none;
-  animation: pop 0.4s ease;
-}
-
-.yay h2 {
-  font-size: 24px;
-  margin-bottom: 14px;
 }
 
 .yay img {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   border-radius: 16px;
-}
-
-@keyframes pop {
-  from { opacity: 0; transform: scale(0.85); }
-  to { opacity: 1; transform: scale(1); }
+  margin-top: 12px;
 }
 </style>
 </head>
@@ -218,66 +87,85 @@ button {
 
 <div class="card" id="card">
 
-  <div class="teddy">
-    <div class="face" id="face">
-      <div class="ear left"></div>
-      <div class="ear right"></div>
-      <div class="eye left"></div>
-      <div class="eye right"></div>
-      <div class="cheek left"></div>
-      <div class="cheek right"></div>
-      <div class="nose"></div>
-    </div>
-  </div>
+<!-- 🧸 SVG TEDDY -->
+<svg id="teddy" width="160" height="160" viewBox="0 0 200 200">
+  <!-- Arms -->
+  <g id="leftArm" transform-origin="110px 110px">
+    <rect x="40" y="90" rx="14" ry="14" width="40" height="80" fill="#f1b97a"/>
+  </g>
 
-  <h1>Anushri will you be my valentine?</h1>
+  <g id="rightArm" transform-origin="90px 110px">
+    <rect x="120" y="90" rx="14" ry="14" width="40" height="80" fill="#f1b97a"/>
+  </g>
 
-  <div class="buttons">
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
-  </div>
+  <!-- Head -->
+  <circle cx="100" cy="80" r="55" fill="#f1b97a"/>
+  <circle cx="65" cy="35" r="18" fill="#f1b97a"/>
+  <circle cx="135" cy="35" r="18" fill="#f1b97a"/>
 
-  <div class="hint">You can’t say “No” to me bebe 🙈</div>
+  <!-- Face -->
+  <circle id="eyeL" cx="82" cy="75" r="5"/>
+  <circle id="eyeR" cx="118" cy="75" r="5"/>
+  <ellipse id="mouth" cx="100" cy="95" rx="10" ry="6" fill="#333"/>
+</svg>
 
-  <div class="no-reaction" id="noReaction"></div>
+<h1>Anushri will you be my valentine?</h1>
 
-  <div class="yay" id="yay">
-    <h2>YAY! 🎉</h2>
-    <img src="https://i.imgur.com/WrKPhfd.gif" alt="mind blown gif">
-  </div>
+<div class="buttons">
+  <button id="yes">Yes</button>
+  <button id="no">No</button>
+</div>
+
+<div class="reaction" id="reaction"></div>
+
+<div class="yay" id="yay">
+  <h2>YAY! 🎉</h2>
+  <img src="https://i.imgur.com/WrKPhfd.gif" alt="mind blown">
+</div>
 
 </div>
 
 <script>
-const yesBtn = document.getElementById("yes");
+const leftArm = document.getElementById("leftArm");
+const rightArm = document.getElementById("rightArm");
+const mouth = document.getElementById("mouth");
+const reaction = document.getElementById("reaction");
 const noBtn = document.getElementById("no");
-const face = document.getElementById("face");
-const reactionBox = document.getElementById("noReaction");
-const card = document.getElementById("card");
+const yesBtn = document.getElementById("yes");
 const yay = document.getElementById("yay");
+const card = document.getElementById("card");
 
-let noCount = 0;
+let step = 0;
 
-const reactions = [
-  { cls: "confused", text: "uhhh… what?" },
-  { cls: "facepalm", text: "okay that one’s on me" },
-  { cls: "broken", text: "emotional damage (temporary)" },
-  { cls: "sign", text: "" }
+const states = [
+  () => {
+    leftArm.style.transform = "rotate(-20deg)";
+    rightArm.style.transform = "rotate(20deg)";
+    mouth.setAttribute("rx", "4");
+    reaction.textContent = "😕 huh? try again.";
+  },
+  () => {
+    leftArm.style.transform = "rotate(-70deg)";
+    reaction.textContent = "🤦 nope. incorrect choice.";
+  },
+  () => {
+    leftArm.style.transform = "rotate(0deg)";
+    rightArm.style.transform = "rotate(0deg)";
+    reaction.textContent = "💔 nah. not allowed.";
+  },
+  () => {
+    leftArm.style.transform = "rotate(-40deg)";
+    rightArm.style.transform = "rotate(40deg)";
+    reaction.textContent = "🪧 okay but why tho 😭 (still no)";
+    noBtn.style.display = "none";
+  }
 ];
 
-function handleNo() {
-  if (noCount >= reactions.length) {
-    noBtn.style.display = "none";
-    return;
+noBtn.addEventListener("click", () => {
+  if (step < states.length) {
+    states[step++]();
   }
-
-  face.className = "face " + reactions[noCount].cls;
-  reactionBox.textContent = reactions[noCount].text;
-  noCount++;
-}
-
-noBtn.addEventListener("click", handleNo);
-noBtn.addEventListener("touchstart", handleNo);
+});
 
 yesBtn.addEventListener("click", () => {
   card.innerHTML = "";
