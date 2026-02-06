@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Valentine</title>
+<title>Ansurhi, will you be my valentine 😋?</title>
 
 <style>
 html, body {
@@ -23,8 +22,7 @@ body {
 
 .card {
   background: #fff;
-  width: 92%;
-  max-width: 460px;
+  width: 460px;
   padding: 28px 22px 34px;
   border-radius: 26px;
   text-align: center;
@@ -32,11 +30,11 @@ body {
   position: relative;
 }
 
-/* 🎥 VIDEO CROSSFADER */
+/* 🎥 VIDEO LAYER */
 .video-wrap {
   position: relative;
-  width: 100%;
-  max-width: 260px;
+  width: 260px;
+  height: 260px;
   margin: 0 auto;
 }
 
@@ -44,14 +42,16 @@ body {
   position: absolute;
   inset: 0;
   width: 100%;
+  height: 100%;
   border-radius: 18px;
+  object-fit: cover;
   opacity: 0;
-  transition: opacity 0.45s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .video-wrap video.active {
   opacity: 1;
-  position: relative;
+  z-index: 2;
 }
 
 h1 {
@@ -81,13 +81,14 @@ button {
   font-weight: 600;
 }
 
-#yes:hover, #yes:active {
+#yes:hover {
   transform: scale(1.12);
 }
 
 #no {
   background: #eee;
-  position: relative;
+  position: absolute;
+  right: 0;
 }
 
 .text {
@@ -101,13 +102,13 @@ button {
 
 <div class="card" id="card">
 
-  <!-- 🎥 Crossfade videos -->
+  <!-- 🎥 TEDDY VIDEOS -->
   <div class="video-wrap">
-    <video id="v1" class="active" autoplay muted playsinline>
+    <video id="vidA" class="active" autoplay muted loop>
       <source src="youre_already_mine.mp4" type="video/mp4">
     </video>
-    <video id="v2" muted playsinline>
-      <source src="" type="video/mp4">
+    <video id="vidB" muted>
+      <source src="youre_already_mine.mp4" type="video/mp4">
     </video>
   </div>
 
@@ -125,9 +126,10 @@ button {
 </div>
 
 <script>
-const v1 = document.getElementById("v1");
-const v2 = document.getElementById("v2");
-let front = v1, back = v2;
+const vidA = document.getElementById("vidA");
+const vidB = document.getElementById("vidB");
+let front = vidA;
+let back = vidB;
 
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
@@ -137,10 +139,10 @@ const card = document.getElementById("card");
 let noCount = 0;
 let touchedNo = false;
 
-/* 🔁 Smooth crossfade swap */
-function swapVideo(src) {
+/* 🔁 Smooth crossfade */
+function crossfade(src, loop=false) {
   back.src = src;
-  back.load();
+  back.loop = loop;
   back.play();
 
   back.classList.add("active");
@@ -151,50 +153,52 @@ function swapVideo(src) {
   back = temp;
 }
 
-/* 😈 FAST NO (desktop + mobile) */
-function dodgeNo() {
+/* ⚡ FAST NO (cursor-chasing) */
+noBtn.addEventListener("mouseenter", () => {
   touchedNo = true;
-  const x = Math.random() * 240 - 120;
-  const y = Math.random() * 120 - 60;
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 80 - 40;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
+});
 
-noBtn.addEventListener("mouseenter", dodgeNo);
-noBtn.addEventListener("mousemove", dodgeNo);
-noBtn.addEventListener("touchstart", dodgeNo);
+noBtn.addEventListener("mousemove", () => {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 100 - 50;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
 
-/* 🎭 Reactions on No */
+/* 🎭 NO reactions */
 const reactions = [
-  { src: "you_dare_deny_me.mp4", text: "excuse me??? 😐" },
-  { src: "do_you_wanna_reconsider.mp4", text: "yeah… try that again 😏" },
-  { src: "youre_already_mine.mp4", text: "nice try. you’re mine 🧸💗", hideNo: true }
+  { src: "you_dare_deny_me.mp4", text: "EXCUSEEE MEEE 🤨?!!" },
+  { src: "do_you_wanna_reconsider.mp4", text: "YEA... TRY THAT AGAIN 😼" },
+  { src: "youre_already_mine.mp4", text: "NICE TRY. YOU'RE ALREADY MINE 🧸💗", hideNo: true, loop: true }
 ];
 
 noBtn.addEventListener("click", () => {
   if (noCount >= reactions.length) return;
   const r = reactions[noCount++];
-  swapVideo(r.src);
+  crossfade(r.src, r.loop);
   text.textContent = r.text;
   if (r.hideNo) noBtn.style.display = "none";
 });
 
-/* ✅ YES logic — GIF ONLY if YES FIRST */
+/* ✅ YES LOGIC */
 yesBtn.addEventListener("click", () => {
   if (!touchedNo) {
     card.innerHTML = `
       <h1>YAY! 🎉</h1>
       <img src="https://i.imgur.com/WrKPhfd.gif"
-           style="width:100%;max-width:300px;border-radius:16px;margin-top:12px;">
+           style="width:300px;border-radius:16px;margin-top:12px;">
       <p style="margin-top:12px;">first try. as expected 💗</p>
     `;
   } else {
     card.innerHTML = `
       <h1>Correct choice 😌</h1>
-      <video autoplay loop muted playsinline
-             style="width:100%;max-width:260px;border-radius:18px;margin-top:12px;">
+      <video autoplay loop muted
+             style="width:260px;border-radius:18px;margin-top:12px;">
         <source src="youre_already_mine.mp4" type="video/mp4">
       </video>
-      <p style="margin-top:12px;">took you a second, but we got there 🧸</p>
+      <p style="margin-top:12px;">took you a second, but we got there babe :p</p>
     `;
   }
 });
